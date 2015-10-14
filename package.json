@@ -1,0 +1,26 @@
+{
+  "name": "cli-texting",
+  "version": "0.0.1",
+  "description": "\"use your command line for texting purposes\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "texting",
+    "twillio"
+  ],
+  "bin": {
+    "text": "index.js"
+  },
+  "preferGlobal": true,
+  "author": "Irina Shestak",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.2",
+    "cli-color": "~1.0.0",
+    "twilio": "~2.3.0",
+    "path": "~0.12.7",
+    "yargs": "~3.25.0"
+  }
+}
