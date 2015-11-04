@@ -17,7 +17,7 @@ var argv = require("yargs")
 })
 .argv
 
-var text = new Text();
+var text = new Text(argv);
 
 if (argv.to){
   text.sendMessage();

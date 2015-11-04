@@ -1,24 +1,28 @@
-var fs = require("fs");
 var client = require("twilio");
+var fs = require("fs");
+var path = require("path");
 
 function readConfig() {
-  var configFile = fs.readFileSync(argv.config, "utf-8");
+  console.log(this.config);
+  var configFile = fs.readFileSync(this.config, "utf-8");
   return JSON.parse(configFile);
 }
 
-function Text() {
-  
+function Text(argv) {
+  this.to = argv.to;
+  this.message = argv.m;
+  this.config = argv.config;
 }
 
 
 Text.prototype.sendMessage = function() {
   // connect to twillio;
-  var config = readConfig();
+  var config = readConfig().bind(this);
   var twilio = client(config.twilio.accountSID, config.twilio.authToken);
   twilio.sendMessage({
-    to: argv.to,
+    to: this.to,
     from: config.twilio.number,
-    body: argv.m
+    body: this.message
   }, function(err, responseData) {
     if (err) {
       console.log(err);
