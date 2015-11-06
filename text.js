@@ -2,9 +2,8 @@ var client = require("twilio");
 var fs = require("fs");
 var path = require("path");
 
-function readConfig() {
-  console.log(this.config);
-  var configFile = fs.readFileSync(this.config, "utf-8");
+function readConfig(config) {
+  var configFile = fs.readFileSync(config, "utf-8");
   return JSON.parse(configFile);
 }
 
@@ -17,7 +16,7 @@ function Text(argv) {
 
 Text.prototype.sendMessage = function() {
   // connect to twillio;
-  var config = readConfig().bind(this);
+  var config = readConfig(this.config);
   var twilio = client(config.twilio.accountSID, config.twilio.authToken);
   twilio.sendMessage({
     to: this.to,

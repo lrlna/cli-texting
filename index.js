@@ -1,6 +1,4 @@
 #! /usr/bin/env node 
-var path = require("path");
-var fs = require("fs");
 var clc = require("cli-color");
 var http = require('http');
 var Text = require("./text.js");
