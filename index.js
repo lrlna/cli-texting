@@ -1,20 +1,45 @@
 #! /usr/bin/env node 
+
 var app = require("express")();
 var twilio = require("twilio");
 var clc = require("cli-color");
 var http = require('http').Server(app);
 var Text = require("./text.js");
 
+// parse arguments;
 var argv = require("yargs")
-.usage("Usage: [$0] your text here")
+.usage("Usage:")
+.command("start", "Start a conversation", function(yargs) {
+  argv = yargs
+  .option("with", {
+    alias: "w",
+    describe: "Start a coversation with contact",
+    type: "string"
+  })
+  .option("message", {
+    alias: "m",
+    describe: "Text message",
+    type: "string"
+  })
+})
+.command("configure", "Set up your twilio with this module")
+.command("add", "Add you contacts", function(yargs) {
+  argv = yargs
+  .option("name", {
+    alias: "n",
+    describe: "Name of contact", 
+    type: "string"
+  })
+  .option("phone", {
+    alias: "p",
+    describe: "Phone number of contact with area code",
+    type: "string"
+  })
+})
 .options({
   "config": {
     default: './config.json'
   }
-})
-.describe({
-  "to": "Send message to:",
-  "m": "Contents of the message"
 })
 .argv
 
