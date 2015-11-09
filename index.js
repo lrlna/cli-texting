@@ -1,7 +1,10 @@
 #! /usr/bin/env node 
+var app = require("express")();
+var twilio = require("twilio");
 var clc = require("cli-color");
-var http = require('http');
+var http = require('http').Server(app);
 var Text = require("./text.js");
+
 var argv = require("yargs")
 .usage("Usage: [$0] your text here")
 .options({
@@ -23,18 +26,22 @@ if (argv.to){
   require("yargs").showHelp();
 }
 
+
+app.get('/', function(req, res){
+  res.send();
+});
+
 // need to create server and get this module to start a server when running; 
-//http.createServer(function(req, res) {
-//  // Twiml response; 
-//  var resp = new twilio.TwimlResponse();
-//  
-//  res.writeHead(200, {
-//    "Content-Type": "text/xml"
-//  })
-//  
-//  console.log(resp.toString());
-//  res.end(resp.toString());
-//
-//}).listen(1337);
+http.listen(3000, function() {
+  // Twiml response; 
+  //var resp = new twilio.TwimlResponse();
+  //
+  //res.writeHead(200, {
+  // "Content-Type": "text/xml"
+  //})
+  //
+  //res.end(resp.toString());
+
+});
 
 
