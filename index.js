@@ -4,9 +4,11 @@ var app = require("express")();
 var twilio = require("twilio");
 var clc = require("cli-color");
 var http = require('http').Server(app);
-var Text = require("./text.js");
+var Text = require("./src/text.js");
+var Config = require("./src/config.js");
 
 // parse arguments;
+// argument parsing;
 var argv = require("yargs")
 .usage("Usage:")
 .command("start", "Start a conversation", function(yargs) {
@@ -22,7 +24,7 @@ var argv = require("yargs")
     type: "string"
   })
 })
-.command("configure", "Set up your twilio with this module")
+.command("config", "Set up your twilio with this module")
 .command("add", "Add you contacts", function(yargs) {
   argv = yargs
   .option("name", {

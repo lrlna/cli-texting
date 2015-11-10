@@ -29,5 +29,8 @@ Text.prototype.sendMessage = function() {
   });
 }
 
+Text.prototype.config = function() {
+        
+}
 
 module.exports = Text;
