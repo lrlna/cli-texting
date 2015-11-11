@@ -46,9 +46,10 @@ var argv = require("yargs")
 .argv
 
 var text = new Text(argv);
+var config = new Config();
 
-if (argv.to){
-  text.sendMessage();
+if (argv.config){
+  config.ifExists();
 } else {
   require("yargs").showHelp();
 }
