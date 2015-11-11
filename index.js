@@ -5,10 +5,9 @@ var twilio = require("twilio");
 var clc = require("cli-color");
 var http = require('http').Server(app);
 var Text = require("./src/text.js");
-var Config = require("./src/config.js");
+var Init = require("./src/config.js");
 
-// parse arguments;
-// argument parsing;
+// parse arguments; 
 var argv = require("yargs")
 .usage("Usage:")
 .command("start", "Start a conversation", function(yargs) {
@@ -24,7 +23,7 @@ var argv = require("yargs")
     type: "string"
   })
 })
-.command("config", "Set up your twilio with this module")
+.command("init", "Set up your twilio with this module")
 .command("add", "Add you contacts", function(yargs) {
   argv = yargs
   .option("name", {
@@ -38,18 +37,13 @@ var argv = require("yargs")
     type: "string"
   })
 })
-.options({
-  "config": {
-    default: './config.json'
-  }
-})
 .argv
 
 var text = new Text(argv);
-var config = new Config();
+var init = new Init();
 
-if (argv.config){
-  config.ifExists();
+if (argv.init){
+  init.init();
 } else {
   require("yargs").showHelp();
 }

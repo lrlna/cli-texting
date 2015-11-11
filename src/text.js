@@ -10,7 +10,7 @@ function readConfig(config) {
 function Text(argv) {
   this.to = argv.to;
   this.message = argv.m;
-  this.config = argv.config;
+  this.config = "./config.json";
 }
 
 
