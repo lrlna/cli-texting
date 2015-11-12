@@ -1,11 +1,10 @@
 #! /usr/bin/env node 
-
 var app = require("express")();
 var twilio = require("twilio");
 var clc = require("cli-color");
 var http = require('http').Server(app);
 var Text = require("./src/text.js");
-var Init = require("./src/config.js");
+var Config = require("./src/config.js");
 
 // parse arguments; 
 var argv = require("yargs")
@@ -23,7 +22,7 @@ var argv = require("yargs")
     type: "string"
   })
 })
-.command("init", "Set up your twilio with this module")
+.command("config", "Set up your twilio with this module")
 .command("add", "Add you contacts", function(yargs) {
   argv = yargs
   .option("name", {
@@ -40,10 +39,10 @@ var argv = require("yargs")
 .argv
 
 var text = new Text(argv);
-var init = new Init();
+var config = new Config();
 
-if (argv.init){
-  init.init();
+if (argv.config){
+  config.init();
 } else {
   require("yargs").showHelp();
 }

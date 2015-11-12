@@ -2,17 +2,13 @@ var fs = require("fs");
 var path = require("path");
 var promzard = require("promzard");
 
-function Init() {
+function Config() {
   this.argv = 0;
 }
 
 // check if config.json exists
 // if exists -- warn user file exists
-Init.prototype.exists = function() {
-}
-
-Init.prototype.init = function() {
-  var textrc = path.join(__dirname, "config.json");
+Config.prototype.exists = function() {
   fs.stat(textrc, function(err, stat) {
     if(err === null) {
       return true;
@@ -20,11 +16,27 @@ Init.prototype.init = function() {
       return false;
     } 
   })
-    
+}
+
+Config.prototype.init = function() {
+  var textrc = path.join(__dirname, "config.json");
+  
+  // warn user what's happening.
+  console.log([
+    "Hey! This is your friendly text module initialization.", 
+    "I am going to walk you through setting up your config.",
+    "",
+    "Have your Twilio keys ready before we begin!",
+    "",
+    "You can add your contacts later by using",
+    "text add [<name> <number]",
+    "",
+    "ctrl-c at anytime if you wish to quit this setup process"
+  ].join("\n"))
 }
 // ask if want to overwrite
 // if yes, overwrite twilio id's
 // if does not exist, create a file
 // then ask user for twilio information
 
-module.exports = Init;
+module.exports = Config;
