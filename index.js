@@ -41,7 +41,7 @@ var argv = require("yargs")
 var text = new Text(argv);
 var config = new Config();
 
-if (argv.config){
+if (argv._[0] === "config"){
   config.init();
 } else {
   require("yargs").showHelp();
