@@ -28,12 +28,16 @@ Config.prototype.init = function() {
     "",
     "Have your Twilio keys ready before we begin!",
     "",
-    "You can add your contacts later by using",
-    "text add [<name> <number]",
-    "",
     "ctrl-c at anytime if you wish to quit this setup process"
   ].join("\n"))
+
+  promzard("./src/setup.js", function(err, data) {
+    if (err) console.log(err);
+    console.log(data.greeting)
+  })
 }
+
+
 // ask if want to overwrite
 // if yes, overwrite twilio id's
 // if does not exist, create a file
