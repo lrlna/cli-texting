@@ -1,17 +1,17 @@
 var fs = require("fs");
 
+// Get Twilio information from the user;
 module.exports = {
-  "greeting": prompt("Hey stranger, what shall you be called?", function(who) {
-    return "Hey, " + who;
+  "displayName": prompt("Hey stranger, what shall you be called?", function(displayName) {
+    return displayName;
   }),
-  "twilio accountID": prompt("", function(accountID) {
-    return accountID;
+  "twilio accountSID": prompt("Twilio accountSID", function(accountSID) {
+    return accountSID;
   }),
-  "twilio accountName": prompt("", function(accountName){
-    return accountName;
+  "twilio authToken": prompt("Twilio authToken", function(authToken){
+    return authToken;
   }),
-  "filename": __filename
-  //"twilio accountID": prompt("")
-  //"twilio accountName": accountName
-
+  "twilio number": prompt("Twilio Phone number", function(phoneNumber) {
+    return phoneNumber;
+  })
 }

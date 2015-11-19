@@ -1,6 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 var promzard = require("promzard");
+var prompt = require("prompt");
 
 function Config() {
   this.argv = 0;
@@ -33,11 +34,13 @@ Config.prototype.init = function() {
 
   promzard("./src/setup.js", function(err, data) {
     if (err) console.log(err);
-    console.log(data.greeting)
+    config.writeFile(data);
   })
 }
 
-
+Config.prototype.writeFile = function() {
+    
+}
 // ask if want to overwrite
 // if yes, overwrite twilio id's
 // if does not exist, create a file
