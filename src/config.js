@@ -9,8 +9,8 @@ function Config() {
 
 // check if config.json exists
 // if exists -- warn user file exists
-Config.prototype.exists = function() {
-  fs.stat(textrc, function(err, stat) {
+Config.prototype.exists = function(file) {
+  fs.stat(file, function(err, stat) {
     if(err === null) {
       return true;
     } else {
@@ -34,13 +34,34 @@ Config.prototype.init = function() {
 
   promzard("./src/setup.js", function(err, data) {
     if (err) console.log(err);
-    config.writeFile(data);
+    this.writeFile(data);
   })
 }
 
-Config.prototype.writeFile = function() {
-    
+Config.prototype.writeFile = function(data) {
+  if(this.exists('./config.json')) {
+    console.log([
+      "Config file already exists, and it will be overwritten.",
+    ].join("\n"));
+  }
 }
+
+Config.prototype.yesOrNo = function (message, done) { 
+  prompt.start()
+  
+  var property = {
+    name: "yesno",
+    message: message,
+    validator: /y[es]*|n[o]?/,
+    warning: "Please respond with yer or no",
+    default: 'no'
+  }
+
+  prompt.get(property, function(err, result) {
+    done(err, result)
+  })
+}
+
 // ask if want to overwrite
 // if yes, overwrite twilio id's
 // if does not exist, create a file

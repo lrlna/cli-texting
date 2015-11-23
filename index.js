@@ -48,21 +48,21 @@ if (argv._[0] === "config"){
 }
 
 
-app.get('/', function(req, res){
-  res.send();
-});
+//app.get('/', function(req, res){
+//  res.send();
+//});
 
 // need to create server and get this module to start a server when running; 
-http.listen(3000, function() {
-  // Twiml response; 
-  //var resp = new twilio.TwimlResponse();
-  //
-  //res.writeHead(200, {
-  // "Content-Type": "text/xml"
-  //})
-  //
-  //res.end(resp.toString());
-
-});
+//http.listen(3000, function() {
+//  // Twiml response; 
+//  //var resp = new twilio.TwimlResponse();
+//  //
+//  //res.writeHead(200, {
+//  // "Content-Type": "text/xml"
+//  //})
+//  //
+//  //res.end(resp.toString());
+//
+//});
 
 
