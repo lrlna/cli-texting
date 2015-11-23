@@ -43,6 +43,15 @@ Config.prototype.writeFile = function(data) {
     console.log([
       "Config file already exists, and it will be overwritten.",
     ].join("\n"));
+    this.yesOrNo("Are you sure you want to overwrite", function(err, result ) {
+      if (err) console.error(err)
+      if (result.yesno === "yes") {
+        fs.writeFile(data, function(err, res) {
+          if (err) console.error(err);
+          if (res) console.log("Your config is all setup!")
+        }) 
+      }
+    })
   }
 }
 
