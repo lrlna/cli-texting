@@ -4,7 +4,7 @@ var twilio = require("twilio");
 var clc = require("cli-color");
 var http = require('http').Server(app);
 var Text = require("./src/text.js");
-var Config = require("./src/config.js");
+var config = require("./src/config.js");
 
 // parse arguments; 
 var argv = require("yargs")
@@ -39,7 +39,6 @@ var argv = require("yargs")
 .argv
 
 var text = new Text(argv);
-var config = new Config();
 
 if (argv._[0] === "config"){
   config.init();

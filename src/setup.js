@@ -1,4 +1,5 @@
 var fs = require("fs");
+var config = require("./config");
 
 // Get Twilio information from the user;
 module.exports = {
