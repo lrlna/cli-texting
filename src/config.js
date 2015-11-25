@@ -3,28 +3,21 @@ var path = require("path");
 var promzard = require("promzard");
 var prompt = require("prompt");
 
-//function Config() {
-//  this.argv = 0;
-//}
 
-// check if config.json exists
-// if exists -- warn user file exists
+var configFile = path.join(__dirname, "../config.json")
 
 config = {
+  // check if config.json exists
   exists: function(file) {
-    fs.stat(file, function(err, stat) {
-      if(err === null) {
-        return true;
-      } else {
-        return false;
-      } 
+    return fs.stat(file, function(err, stat) {
+      var exist =  !!stat ? true : false
+      return exist
     })
   },
 
   init: function() {
-    var textrc = path.join(__dirname, "config.json");
-    
     // warn user what's happening.
+    var setuprc = path.join(__dirname, "./setup.js")
     console.log([
       "Hey! This is your friendly text module initialization.", 
       "I am going to walk you through setting up your config.",
@@ -34,23 +27,22 @@ config = {
       "ctrl-c at anytime if you wish to quit this setup process"
     ].join("\n"))
 
-    promzard("./src/setup.js", function(err, data) {
+    promzard(setuprc, function(err, data) {
       if (err) console.log(err);
       console.log(data);
-      writeFile(data)
+      config.writeToFile(data);
     })
   },
 
-  writeFile: function(data) {
-    if(this.exists('./config.json')) {
-      console.log([
-        "Config file already exists, and it will be overwritten.",
-      ].join("\n"));
-      this.yesOrNo("Are you sure you want to overwrite", function(err, result ) {
+  writeToFile: function(data) {
+    console.log(config.exists(configFile))
+    if(config.exists(configFile)) {
+      console.log( "Config file already exists, and it will be overwritten.")
+      config.yesOrNo("Are you sure you want to overwrite", function(err, result ) {
         if (err) console.error(err)
         if (result.yesno === "yes") {
-          fs.writeFile(data, function(err, res) {
-            if (res) console.log("Your config is all setup!")
+          fs.writeFile(configFile, data, function(err) {
+            if (!err) console.log("Your config is all setup!")
           }) 
         }
       })
@@ -73,12 +65,5 @@ config = {
     })
   }
 }
-
-
-
-// ask if want to overwrite
-// if yes, overwrite twilio id's
-// if does not exist, create a file
-// then ask user for twilio information
 
 module.exports = config;
