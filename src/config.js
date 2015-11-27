@@ -11,8 +11,6 @@ config = {
     var setuprc = path.join(__dirname, "./setup.js")
     console.log([
       "Hey! This is your friendly text module initialization.", 
-      "I am going to walk you through setting up your config.",
-      "",
       "Have your Twilio keys ready before we begin!",
       "",
       "ctrl-c at anytime if you wish to quit this setup process"
@@ -41,7 +39,10 @@ config = {
   writeToFile: function(data) {
     fs.writeFile(configFile, data, function(err) {
       // use logger to log
-      if (!err) console.log("Your config is all setup!")
+      if (!err) console.log([
+        "Your config is all setup!",
+        "You can start texting with <text start>"
+      ], join("\n"));
     }) 
   },
 
