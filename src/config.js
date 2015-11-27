@@ -26,12 +26,12 @@ config = {
       fs.stat(configFile, function(err, stat) {
         // use logger to log
         if (!!stat) console.log("Config file already exists, and it will be overwritten")
-        config.yesOrNo("Are you sure you want to overwrite", function(err, result) {
+        config.yesOrNo("Are you sure you want to overwrite", function(result) {
           if (result.yesno === "yes") {
             config.writeToFile(JSON.stringify(twilio, null, 2))
           } else {
             // use logger to log
-            console.log() 
+            console.log("Will not be overwriting your existing config file.")
           }
         })
       })
@@ -40,6 +40,7 @@ config = {
 
   writeToFile: function(data) {
     fs.writeFile(configFile, data, function(err) {
+      // use logger to log
       if (!err) console.log("Your config is all setup!")
     }) 
   },
@@ -56,8 +57,9 @@ config = {
     }
 
     prompt.get(property, function(err, result) {
+      // use logger to log
       if (err) console.log(err)
-      done(err, result)
+      done(result)
     })
 
   }
