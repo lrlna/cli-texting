@@ -7,30 +7,22 @@ function readConfig(config) {
   return JSON.parse(configFile);
 }
 
-function Text(argv) {
-  this.to = argv.to;
-  this.message = argv.m;
-  this.config = "./config.json";
+var text = {
+  sendMessage: function(to, message) {
+    // connect to twillio;
+    var config = readConfig("./config.json")
+    var twilio = client(config.twilio.accountSID, config.twilio.authToken)
+    twilio.sendMessage({
+      to: to,
+      from: config.twilio.number,
+      body: message
+    }, function(err, responseData) {
+      if (err) {
+        console.log(err)
+      }
+    })
+  }
+
 }
 
-
-Text.prototype.sendMessage = function() {
-  // connect to twillio;
-  var config = readConfig(this.config);
-  var twilio = client(config.twilio.accountSID, config.twilio.authToken);
-  twilio.sendMessage({
-    to: this.to,
-    from: config.twilio.number,
-    body: this.message
-  }, function(err, responseData) {
-    if (err) {
-      console.log(err);
-    }
-  });
-}
-
-Text.prototype.config = function() {
-        
-}
-
-module.exports = Text;
+module.exports = text

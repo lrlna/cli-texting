@@ -3,8 +3,9 @@ var app = require("express")();
 var twilio = require("twilio");
 var clc = require("cli-color");
 var http = require('http').Server(app);
-var Text = require("./src/text.js");
+var text = require("./src/text.js");
 var config = require("./src/config.js");
+var addContact = require("./src/addContact.js");
 
 // parse arguments; 
 var argv = require("yargs")
@@ -23,7 +24,7 @@ var argv = require("yargs")
   })
 })
 .command("config", "Set up your twilio with this module")
-.command("add", "Add you contacts", function(yargs) {
+.command("add", "Add you contacts providing a name and a phone number with the area code <add --name [name] --phone [phone]", function(yargs) {
   argv = yargs
   .option("name", {
     alias: "n",
@@ -38,12 +39,12 @@ var argv = require("yargs")
 })
 .argv
 
-var text = new Text(argv);
-
 if (argv._[0] === "config"){
-  config.init();
-} else {
-  require("yargs").showHelp();
+  config.init()
+} if (argv._[0] === "add") {
+  addContact.init(argv) 
+}  else {
+  require("yargs").showHelp()
 }
 
 
