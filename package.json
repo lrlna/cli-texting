@@ -10,6 +10,10 @@
     "texting",
     "twillio"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lrlna/cli-texting.git"
+  },
   "bin": {
     "text": "index.js"
   },

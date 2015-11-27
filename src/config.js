@@ -3,15 +3,14 @@ var path = require("path");
 var promzard = require("promzard");
 var prompt = require("prompt");
 
-
 var configFile = path.join(__dirname, "../config.json")
 
 config = {
   // check if config.json exists
-  exists: function(file) {
-    return fs.stat(file, function(err, stat) {
+  exists: function(file, done) {
+    fs.stat(file, function(err, stat) {
       var exist =  !!stat ? true : false
-      return exist
+      done(exist)
     })
   },
 
@@ -28,25 +27,29 @@ config = {
     ].join("\n"))
 
     promzard(setuprc, function(err, data) {
+      // use logger to log
       if (err) console.log(err);
-      console.log(data);
-      config.writeToFile(data);
+      var twilio = {}
+      twilio.twilio = data
+      fs.stat(configFile, function(err, stat) {
+        // use logger to log
+        if (!!stat) console.log("Config file already exists, and it will be overwritten")
+        config.yesOrNo("Are you sure you want to overwrite", function(err, result) {
+          if (result.yesno === "yes") {
+            config.writeToFile(JSON.stringify(twilio, null, 2))
+          } else {
+            // use logger to log
+            console.log() 
+          }
+        })
+      })
     })
   },
 
   writeToFile: function(data) {
-    console.log(config.exists(configFile))
-    if(config.exists(configFile)) {
-      console.log( "Config file already exists, and it will be overwritten.")
-      config.yesOrNo("Are you sure you want to overwrite", function(err, result ) {
-        if (err) console.error(err)
-        if (result.yesno === "yes") {
-          fs.writeFile(configFile, data, function(err) {
-            if (!err) console.log("Your config is all setup!")
-          }) 
-        }
-      })
-    }
+    fs.writeFile(configFile, data, function(err) {
+      if (!err) console.log("Your config is all setup!")
+    }) 
   },
 
   yesOrNo: function(message, done) { 
@@ -57,12 +60,14 @@ config = {
       message: message,
       validator: /y[es]*|n[o]?/,
       warning: "Please respond with yer or no",
-      default: 'no'
+      default: "yes"
     }
 
     prompt.get(property, function(err, result) {
+      if (err) console.log(err)
       done(err, result)
     })
+
   }
 }
 
