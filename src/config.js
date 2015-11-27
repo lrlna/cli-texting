@@ -21,6 +21,7 @@ config = {
       if (err) console.log(err);
       var twilio = {}
       twilio.twilio = data
+      twilio.contacts = {}
       fs.stat(configFile, function(err, stat) {
         // use logger to log
         if (!!stat) console.log("Config file already exists, and it will be overwritten")

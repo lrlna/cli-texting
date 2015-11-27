@@ -24,7 +24,7 @@ var argv = require("yargs")
   })
 })
 .command("config", "Set up your twilio with this module")
-.command("add", "Add you contacts providing a name and a phone number with the area code <add --name [name] --phone [phone]", function(yargs) {
+.command("add", "Add you contacts providing a name and a phone number with the area code <add --name [name] --phone [phone]>", function(yargs) {
   argv = yargs
   .option("name", {
     alias: "n",
