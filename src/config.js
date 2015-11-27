@@ -6,14 +6,6 @@ var prompt = require("prompt");
 var configFile = path.join(__dirname, "../config.json")
 
 config = {
-  // check if config.json exists
-  exists: function(file, done) {
-    fs.stat(file, function(err, stat) {
-      var exist =  !!stat ? true : false
-      done(exist)
-    })
-  },
-
   init: function() {
     // warn user what's happening.
     var setuprc = path.join(__dirname, "./setup.js")
