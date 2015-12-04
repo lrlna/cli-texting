@@ -4,40 +4,43 @@ var through = require("through2");
 
 var configFile = path.join(__dirname, "../config.json")
 
-var addContact = {
+function AddContact() {
+  this.name = argv.name
+  this.phone = argv.phone
+}
   // initialize with argvs
-  init: function(argv) {
-    if (!argv.name || !argv.phone) {
-      // ask for missing arguments
-      console.log("Missing phone or name")
-    } else {
-      addContact.addContactToConfig(argv.name, argv.phone) 
-    }
-     
-  }, 
-  // add contact to config if it exists
-  addContactToConfig: function(name, phone) {
-
-    fs.stat(configFile, function(err, stat) {
-      if (!!stat) {
-        var config = fs.readFile(configFile, "utf-8", function(err, data) {
-          var file = JSON.parse(data) 
-          var contact = {}
-          contact.name = name
-          contact.phone = phone
-          file.contacts.push(contact)
-          console.log(file)
-        })
-      }
-    })
-  },
-
-  changeConfigFile: function(chunk, enc, done) {
-    var file = JSON.parse(chunk)
-
-
+AddContact.prototype.init = function(argv) {
+  if (!this.argv.name || !this.argv.phone) {
+    // ask for missing arguments
+    console.log("Missing phone or name")
+  } else {
+    addContact.addContactToConfig() 
   }
-
+} 
+  // add contact to config if it exists
+AddContact.prototype.addContactToConfig = function() {
+  fs.stat(configFile, function(err, stat) {
+    if (!!stat) {
+      fs.readFile(configFile, "utf-8", changeConfigFile)
+    }
+  })
 }
 
-module.exports = addContact;
+AddContact.prototype.changeConfigFile = function(err, data) {
+  if (err) console.log(err)
+  var file = JSON.parse(data) 
+  // store contact in config json file
+  var contact = {}
+  contact.name = this.name
+  contact.phone = this.phone
+  file.contacts.push(contact)
+  fs.writeFile(configFile, JSON.stringify(file, null, 2), function(err) {
+    if (!err) console.log([
+      "Your contact %j has been added", 
+      "You can start texting with <text start>"
+    ].join("\n"));
+  })
+   
+}
+
+module.exports = AddContact;
