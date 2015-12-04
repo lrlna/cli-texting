@@ -21,7 +21,7 @@ config = {
       if (err) console.log(err);
       var twilio = {}
       twilio.twilio = data
-      twilio.contacts = {}
+      twilio.contacts = [] 
       fs.stat(configFile, function(err, stat) {
         // use logger to log
         if (!!stat) console.log("Config file already exists, and it will be overwritten")
@@ -43,7 +43,7 @@ config = {
       if (!err) console.log([
         "Your config is all setup!",
         "You can start texting with <text start>"
-      ], join("\n"));
+      ].join("\n"));
     }) 
   },
 

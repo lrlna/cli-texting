@@ -16,20 +16,25 @@ var addContact = {
      
   }, 
   // add contact to config if it exists
-  addContact: function(name, phone) {
+  addContactToConfig: function(name, phone) {
 
     fs.stat(configFile, function(err, stat) {
       if (!!stat) {
-        var readConfig = fs.readFile(configFile)
-          .pipe(through.obj(changeConfigFile))
-          .on("data", function(data) {
-            console.log(data)
-          })
+        var config = fs.readFile(configFile, "utf-8", function(err, data) {
+          var file = JSON.parse(data) 
+          var contact = {}
+          contact.name = name
+          contact.phone = phone
+          file.contacts.push(contact)
+          console.log(file)
+        })
       }
     })
   },
 
   changeConfigFile: function(chunk, enc, done) {
+    var file = JSON.parse(chunk)
+
 
   }
 
