@@ -1,16 +1,25 @@
-var fs = require("fs");
-var path = require("path");
-var promzard = require("promzard");
-var prompt = require("prompt");
+var path = require("path")
+var promzard = require("promzard")
+var prompt = require("prompt")
 
 var configFile = path.join(__dirname, "../config.json")
 
-config = {
-  init: function() {
+function Config()  {
+  var self = {}
+
+  self.command = ''
+
+  self.desribe = ''
+
+  self.handler = function (argv) {
+    self.init()
+  }
+
+  self.init = function () {
     // warn user what's happening.
     var setuprc = path.join(__dirname, "./setup.js")
     console.log([
-      "Hey! This is your friendly text module initialization.", 
+      "Hey! This is your friendly text module initialization.",
       "Have your Twilio keys ready before we begin!",
       "",
       "ctrl-c at anytime if you wish to quit this setup process"
@@ -21,7 +30,7 @@ config = {
       if (err) console.log(err);
       var twilio = {}
       twilio.twilio = data
-      twilio.contacts = [] 
+      twilio.contacts = []
       fs.stat(configFile, function(err, stat) {
         // use logger to log
         if (!!stat) console.log("Config file already exists, and it will be overwritten")
@@ -37,19 +46,19 @@ config = {
     })
   },
 
-  writeToFile: function(data) {
+  self.writeToFile = function(data) {
     fs.writeFile(configFile, data, function(err) {
       // use logger to log
       if (!err) console.log([
         "Your config is all setup!",
         "You can start texting with <text start>"
       ].join("\n"));
-    }) 
+    })
   },
 
-  yesOrNo: function(message, done) { 
+  self.yesOrNo = function(message, done) {
     prompt.start()
-    
+
     var property = {
       name: "yesno",
       message: message,
@@ -67,4 +76,4 @@ config = {
   }
 }
 
-module.exports = config;
+module.exports = Config;
