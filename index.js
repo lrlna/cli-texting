@@ -1,20 +1,14 @@
 #! /usr/bin/env node
 var app = require("express")()
 var twilio = require("twilio")
-var clc = require("cli-color")
 var http = require('http').Server(app)
-var text = require("./src/text.js")
-var config = require("./src/config.js")
-var addContact = require("./src/addContact.js")
 
 // parse arguments
 var argv = require("yargs")
-  .usage("Usage:")
-  .command(require('start'))
-  .command(require('add'))
-  .command(require('config'))
-  .help()
-  .argv
+.commandDir('commands')
+.demand(1)
+.help()
+.argv
 
 //app.get('/', function(req, res){
 //  res.send()
@@ -32,5 +26,3 @@ var argv = require("yargs")
 //  //res.end(resp.toString())
 //
 //})
-
-

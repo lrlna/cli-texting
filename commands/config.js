@@ -4,16 +4,16 @@ var prompt = require("prompt")
 
 var configFile = path.join(__dirname, "../config.json")
 
+exports.command = 'config'
+
+exports.desribe = 'Set up your twillio access keys'
+
+exports.handler = function (argv) {
+  Config.init()
+}
+
 function Config()  {
   var self = {}
-
-  self.command = ''
-
-  self.desribe = ''
-
-  self.handler = function (argv) {
-    self.init()
-  }
 
   self.init = function () {
     // warn user what's happening.
@@ -75,5 +75,3 @@ function Config()  {
 
   }
 }
-
-module.exports = Config;
