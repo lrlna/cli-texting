@@ -1,4 +1,6 @@
-# cli-texting :sparkles: :sparkles:
+# THIS IS A WIP and is not yet functional; stay tuned :sparkles:
+
+# textmate :sparkles: :sparkles:
 
 This is a work-in-progress repo of the upcoming command-line messaging app.
 

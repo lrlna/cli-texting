@@ -1,5 +1,5 @@
 {
-  "name": "cli-texting",
+  "name": "textmate",
   "version": "0.0.1",
   "description": "\"use your command line for texting purposes\"",
   "main": "index.js",
@@ -8,14 +8,15 @@
   },
   "keywords": [
     "texting",
-    "twillio"
+    "twillio",
+    "cli"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/lrlna/cli-texting.git"
   },
   "bin": {
-    "text": "index.js"
+    "textmate": "index.js"
   },
   "preferGlobal": true,
   "author": "Irina Shestak",
