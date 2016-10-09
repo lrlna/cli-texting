@@ -1,6 +1,7 @@
 var path = require("path")
 var promzard = require("promzard")
 var prompt = require("prompt")
+var fs = require("fs")
 
 var configFile = path.join(__dirname, "../config.json")
 
@@ -9,43 +10,53 @@ exports.command = 'config'
 exports.desribe = 'Set up your twillio access keys'
 
 exports.handler = function (argv) {
-  Config.init()
-}
+  const self = {}
 
-function Config()  {
-  var self = {}
+  var overwrite
 
   self.init = function () {
-    // warn user what's happening.
-    var setuprc = path.join(__dirname, "./setup.js")
-    console.log([
-      "Hey! This is your friendly text module initialization.",
-      "Have your Twilio keys ready before we begin!",
-      "",
-      "ctrl-c at anytime if you wish to quit this setup process"
-    ].join("\n"))
-
-    promzard(setuprc, function(err, data) {
+    // check if file exists already
+    fs.stat(configFile, function(err, stat) {
       // use logger to log
-      if (err) console.log(err);
-      var twilio = {}
-      twilio.twilio = data
-      twilio.contacts = []
-      fs.stat(configFile, function(err, stat) {
-        // use logger to log
-        if (!!stat) console.log("Config file already exists, and it will be overwritten")
-        config.yesOrNo("Are you sure you want to overwrite", function(result) {
-          if (result.yesno === "yes") {
-            config.writeToFile(JSON.stringify(twilio, null, 2))
+      if (!!stat) {
+        console.log("Config file already exists")
+        self.yesOrNo("Are you sure you want to overwrite", function(result) {
+          overwrite = result
+          if (!result) {
+            console.log("Ok, will not be overwriting your existing config file.")
+            process.exit()
           } else {
-            // use logger to log
-            console.log("Will not be overwriting your existing config file.")
+            self.createConfigFile()
           }
         })
-      })
+      } else {
+        self.createConfigFile()
+      }
     })
-  },
+  }
 
+  self.createConfigFile = function(data) {
+    const setuprc = path.join(__dirname, "../src/setup.js")
+
+    promzard(setuprc, function(err, data) {
+      // set up twilio
+      var twilio = {}
+
+      console.log([
+        "Hey! This is your friendly text module initialization.",
+        "Have your Twilio keys ready before we begin!",
+        "",
+        "ctrl-c at anytime if you wish to quit this setup process"
+      ].join("\n"))
+      // use logger to log
+      if (err) console.log(err);
+
+      twilio.twilio = data
+      twilio.contacts = []
+      self.writeToFile(JSON.stringify(twilio, null, 2))
+
+    })
+  }
   self.writeToFile = function(data) {
     fs.writeFile(configFile, data, function(err) {
       // use logger to log
@@ -54,7 +65,7 @@ function Config()  {
         "You can start texting with <text start>"
       ].join("\n"));
     })
-  },
+  }
 
   self.yesOrNo = function(message, done) {
     prompt.start()
@@ -70,8 +81,11 @@ function Config()  {
     prompt.get(property, function(err, result) {
       // use logger to log
       if (err) console.log(err)
-      done(result)
+
+      result.yesno === 'yes' ? done(true) : done(null)
     })
 
   }
+
+  self.init()
 }

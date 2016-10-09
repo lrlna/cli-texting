@@ -1,6 +1,6 @@
 exports.command = 'start'
 
-exports.describe = ''
+exports.describe = 'Start a conversation'
 
 exports.builder = {
   with: {
